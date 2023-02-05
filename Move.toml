@@ -1,0 +1,9 @@
+[package]
+name = 'aptos-deploy-token'
+version = '1.0.0'
+[dependencies.AptosFramework]
+git = 'https://github.com/aptos-labs/aptos-core.git'
+rev = 'main'
+subdir = 'aptos-move/framework/aptos-framework'
+[addresses]
+admin = 'e2ced041cc74fabbc0ea94025a5bfcc08ef7308d4a0ddcc0dd95df0466ab99c9'
