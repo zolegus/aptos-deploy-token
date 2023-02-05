@@ -32,6 +32,17 @@ module atoken {
         move_to<CoinCapabilities<ATN>>(account, CoinCapabilities<ATN>{mint_capability, burn_capability, freeze_capability});
     }
 
+    public fun mint(account:&signer, amount:u64): coin::Coin<ATN> acquires CoinCapabilities {
+        let account_address = signer::address_of(account);
+        assert!(account_address == @admin, E_NO_ADMIN);
+        assert!(exists<CoinCapabilities<ATN>>(account_address), E_NO_CAPABILITIES);
+        let mint_capability = &borrow_global<CoinCapabilities<ATN>>(account_address).mint_capability;
+        coin::mint<ATN>(amount, mint_capability)
+     }
 
+    public fun burn(coins: coin::Coin<ATN>) acquires CoinCapabilities {
+        let burn_capability = &borrow_global<CoinCapabilities<ATN>>(@admin).burn_capability;
+        coin::burn<ATN>(coins, burn_capability);
+    }
 }
 }
